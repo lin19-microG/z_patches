@@ -36,6 +36,14 @@ TOPDIR=$PWD
 #cd $TOPDIR
 
 cd $TOPDIR
+cd external/openssh
+echo "Patching $PWD (hmalloc)"
+patch -p1 < $THISDIR/patch_100_openssh.patch
+echo "-"
+cd $TOPDIR
+
+
+cd $TOPDIR
 cd frameworks/opt/net/wifi
 echo "Patching $PWD (Randomize MAC)"
 patch -p1 < $THISDIR/patch_101_frameworks-opt_net_wifi.patch

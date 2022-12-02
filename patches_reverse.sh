@@ -21,6 +21,7 @@ TOPDIR=$PWD
 
 clear_set art
 clear_set external/conscrypt
+clear_set external/openssh
 clear_set frameworks/ex
 clear_set frameworks/opt/net/wifi
 clear_set packages/apps/Bluetooth
