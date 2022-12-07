@@ -58,6 +58,13 @@ echo "-"
 cd $TOPDIR
 
 cd $TOPDIR
+cd packages/modules/NetworkStack
+echo "Patching $PWD (Ramdomize MAC)"
+patch -p1 < $THISDIR/patch_107_NetworkStack.patch
+echo "-"
+cd $TOPDIR
+
+cd $TOPDIR
 cd packages/providers/DownloadProvider
 echo "Patching $PWD (NETWORK permission)"
 patch -p1 < $THISDIR/patch_103_DownloadProvider.patch
