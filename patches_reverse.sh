@@ -28,9 +28,7 @@ clear_set packages/apps/Bluetooth
 clear_set packages/apps/Nfc
 clear_set packages/apps/SetupWizard
 clear_set packages/modules/NetworkStack
-clear_set packages/providers/DownloadProvider
 clear_set system/bt
 clear_set system/extras
-clear_set system/netd
 
 cd $THISDIR

@@ -65,13 +65,6 @@ echo "-"
 cd $TOPDIR
 
 cd $TOPDIR
-cd packages/providers/DownloadProvider
-echo "Patching $PWD (NETWORK permission)"
-patch -p1 < $THISDIR/patch_103_DownloadProvider.patch
-echo "-"
-cd $TOPDIR
-
-cd $TOPDIR
 cd system/bt
 echo "Patching $PWD (alloc_size attributes)"
 patch -p1 < $THISDIR/patch_104_bt.patch
@@ -82,13 +75,6 @@ cd $TOPDIR
 cd system/extras
 echo "Patching $PWD (pad filenames to 32 bytes)"
 patch -p1 < $THISDIR/patch_105_extras.patch
-echo "-"
-cd $TOPDIR
-
-cd $TOPDIR
-cd system/netd
-echo "Patching $PWD (INTERNET permission)"
-patch -p1 < $THISDIR/patch_106_netd.patch
 echo "-"
 cd $TOPDIR
 
