@@ -74,7 +74,7 @@ fi
 
 # Build emulator or device ?
 if [ "$1" == "x86" ] ; then
-  lunch lineage_sdk_phone_x86-userdebug
+  lunch lineage_sdk_phone_x86_64-userdebug
   mka sdk_addon
 else
   brunch $1
