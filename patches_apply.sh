@@ -58,13 +58,6 @@ echo "-"
 cd $TOPDIR
 
 cd $TOPDIR
-cd packages/modules/NetworkStack
-echo "Patching $PWD (Ramdomize MAC)"
-patch -p1 < $THISDIR/patch_107_NetworkStack.patch
-echo "-"
-cd $TOPDIR
-
-cd $TOPDIR
 cd system/bt
 echo "Patching $PWD (alloc_size attributes)"
 patch -p1 < $THISDIR/patch_104_bt.patch
