@@ -58,7 +58,7 @@ export BUILD_HOSTNAME=localhost
 #start build
 if [ "$TESTKEY" = false ] ; then
   export OWN_KEYS_DIR=~/.android-certs
-  export RELEASE_TYPE=UNOFFICIAL-signed
+  export LINEAGE_EXTRAVERSION=signed
 
   # We need symlinks to fake the existence of a testkey
   # for the selinux build process
