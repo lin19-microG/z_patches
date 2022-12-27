@@ -58,7 +58,7 @@ export BUILD_HOSTNAME=localhost
 #start build
 if [ "$TESTKEY" = false ] ; then
   export OWN_KEYS_DIR=~/.android-certs
-  export RELEASE_TYPE=UNOFFICIAL-signed
+  export TARGET_UNOFFICIAL_BUILD_ID=signed-microG
 
   # We need symlinks to fake the existence of a testkey
   # for the selinux build process
@@ -70,6 +70,8 @@ if [ "$TESTKEY" = false ] ; then
     ln -s $OWN_KEYS_DIR/releasekey.x509.pem $OWN_KEYS_DIR/testkey.x509.pem
     echo "Symlink testkey.x509.pem created"
   fi
+else
+  export TARGET_UNOFFICIAL_BUILD_ID=microG
 fi
 
 # Build emulator or device ?
