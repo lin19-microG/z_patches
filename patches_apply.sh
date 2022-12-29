@@ -36,6 +36,13 @@ cd $TOPDIR
 #cd $TOPDIR
 
 cd $TOPDIR
+cd packages/apps/DocumentsUI
+echo "Patching $PWD (Scoped storage)"
+patch -p1 < $THISDIR/patch_103_DocumentsUI.patch
+echo "-"
+cd $TOPDIR
+
+cd $TOPDIR
 cd external/openssh
 echo "Patching $PWD (hmalloc)"
 patch -p1 < $THISDIR/patch_100_openssh.patch

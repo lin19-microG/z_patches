@@ -27,6 +27,7 @@ clear_set frameworks/ex
 clear_set frameworks/opt/net/wifi
 clear_set packages/apps/Bluetooth
 clear_set packages/apps/Nfc
+clear_set packages/apps/DocumentsUI
 clear_set packages/apps/SetupWizard
 clear_set system/bt
 clear_set system/extras

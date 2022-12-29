@@ -1,0 +1,79 @@
+From 8330665ffe3504904bb2faff95817f050cf44c89 Mon Sep 17 00:00:00 2001
+From: Dmitry Muhomor <muhomor.dmitry@gmail.com>
+Date: Sun, 7 Aug 2022 10:54:28 +0300
+Subject: [PATCH] allow selecting the Download directory via Storage Scopes
+
+---
+ .../android/documentsui/base/DocumentInfo.java   | 16 ++++++++++++++++
+ src/com/android/documentsui/dirlist/Message.java |  2 +-
+ .../android/documentsui/picker/PickFragment.java |  4 ++--
+ 3 files changed, 19 insertions(+), 3 deletions(-)
+
+diff --git a/src/com/android/documentsui/base/DocumentInfo.java b/src/com/android/documentsui/base/DocumentInfo.java
+index ad09c45cf..4c25902a1 100644
+--- a/src/com/android/documentsui/base/DocumentInfo.java
++++ b/src/com/android/documentsui/base/DocumentInfo.java
+@@ -18,8 +18,10 @@ package com.android.documentsui.base;
+ 
+ import static com.android.documentsui.base.SharedMinimal.DEBUG;
+ 
++import android.app.Activity;
+ import android.content.ContentProviderClient;
+ import android.content.ContentResolver;
++import android.content.Context;
+ import android.database.Cursor;
+ import android.net.Uri;
+ import android.os.FileUtils;
+@@ -309,6 +311,20 @@ public class DocumentInfo implements Durable, Parcelable {
+         return (flags & Document.FLAG_PARTIAL) != 0;
+     }
+ 
++    public boolean isBlockedFromTree(Context context) {
++        if (DocumentsContract.EXTERNAL_STORAGE_PROVIDER_AUTHORITY.equals(authority)
++                && "primary:Download".equals(documentId)
++                && (context instanceof Activity))
++        {
++            Activity a = (Activity) context;
++            if ("com.android.permissioncontroller".equals(a.getCallingPackage())) {
++                return false;
++            }
++        }
++
++        return isBlockedFromTree();
++    }
++
+     public boolean isBlockedFromTree() {
+         if (VersionUtils.isAtLeastR()) {
+             return (flags & Document.FLAG_DIR_BLOCKS_OPEN_DOCUMENT_TREE) != 0;
+diff --git a/src/com/android/documentsui/dirlist/Message.java b/src/com/android/documentsui/dirlist/Message.java
+index 371daee0b..d1cce9c50 100644
+--- a/src/com/android/documentsui/dirlist/Message.java
++++ b/src/com/android/documentsui/dirlist/Message.java
+@@ -145,7 +145,7 @@ abstract class Message {
+                         mEnv.getContext().getDrawable(R.drawable.ic_dialog_info));
+             } else if (mEnv.getDisplayState().action == State.ACTION_OPEN_TREE
+                     && mEnv.getDisplayState().stack.peek() != null
+-                    && mEnv.getDisplayState().stack.peek().isBlockedFromTree()
++                    && mEnv.getDisplayState().stack.peek().isBlockedFromTree(mEnv.getContext())
+                     && mEnv.getDisplayState().restrictScopeStorage) {
+                 updateBlockFromTreeMessage();
+                 mCallback = () -> {
+diff --git a/src/com/android/documentsui/picker/PickFragment.java b/src/com/android/documentsui/picker/PickFragment.java
+index e9610a510..43a1ad418 100644
+--- a/src/com/android/documentsui/picker/PickFragment.java
++++ b/src/com/android/documentsui/picker/PickFragment.java
+@@ -181,9 +181,9 @@ public class PickFragment extends Fragment {
+                 mPick.setText(getString(R.string.open_tree_button));
+                 mPick.setWidth(Integer.MAX_VALUE);
+                 mCancel.setVisibility(View.GONE);
+-                mPick.setEnabled(!(mPickTarget.isBlockedFromTree() && mRestrictScopeStorage));
++                mPick.setEnabled(!(mPickTarget.isBlockedFromTree(getContext()) && mRestrictScopeStorage));
+                 mPickOverlay.setVisibility(
+-                        mPickTarget.isBlockedFromTree() && mRestrictScopeStorage
++                        mPickTarget.isBlockedFromTree(getContext()) && mRestrictScopeStorage
+                                 ? View.VISIBLE
+                                 : View.GONE);
+                 break;
+-- 
+2.30.2
+
